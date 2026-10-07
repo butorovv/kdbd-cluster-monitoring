@@ -11,6 +11,7 @@
 make up              # поднять PostgreSQL с учебным датасетом (первый запуск скачает образ)
 make psql            # консоль psql
 make run SEM=01      # прогнать seminar01/seminar01.sql
+make setup SEM=03    # загрузить дополнительные таблицы семинара 3
 make migrate         # применить миграции вашего проекта (seminar02/migrations)
 make migrate-reset   # снести схему project и применить заново (только на семинаре)
 make reset           # перезагрузить учебный датасет с нуля
@@ -38,6 +39,10 @@ iu1-kbdb-2026/
 │   ├── review.md             # ← ревью от другой команды
 │   ├── exercises.md          # домашние упражнения по нормализации
 │   └── example/schema.mmd    # пример из лекции
+├── seminar03/                # аналитический практикум по SQL
+│   ├── seminar03.pdf
+│   ├── setup.sql             # дерево узлов, связи агрегатов, характеристики в jsonb
+│   └── seminar03.sql         # ← решения
 └── README.md
 ```
 
@@ -56,6 +61,10 @@ iu1-kbdb-2026/
 | `telemetry` | измерения: `ts`, `sensor_id`, `value` |
 | `event` | события: `severity` (info / warning / alarm / unplanned_stop) — «как есть» из SCADA |
 | `maintenance` | ремонты — перенесено из Excel, со всеми последствиями |
+| `component` | состав агрегата: дерево узлов и деталей (семинар 3, `make setup SEM=03`) |
+| `sensor_mount` | на каком узле установлен датчик (семинар 3) |
+| `flow_link` | технологические связи между агрегатами; в графе есть цикл (семинар 3) |
+| `unit_spec` | технические характеристики в jsonb (семинар 3) |
 
 ## Если что-то не так
 

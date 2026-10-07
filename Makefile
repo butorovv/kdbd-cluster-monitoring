@@ -2,7 +2,7 @@
 SEM ?= 01
 PSQL = docker compose exec -T postgres psql -U student -d plant -v ON_ERROR_STOP=1
 
-.PHONY: up down reset psql run logs migrate migrate-reset
+.PHONY: up down reset psql run setup logs migrate migrate-reset
 
 up:              ## поднять стек
 	docker compose up -d
@@ -22,6 +22,9 @@ logs:            ## логи PostgreSQL
 
 run:             ## прогнать seminarNN/seminarNN.sql:  make run SEM=01
 	docker compose exec -T postgres psql -U student -d plant -v ON_ERROR_STOP=0 < seminar$(SEM)/seminar$(SEM).sql
+
+setup:           ## загрузить дополнительные таблицы семинара:  make setup SEM=03
+	docker compose exec -T postgres psql -U student -d plant -v ON_ERROR_STOP=1 < seminar$(SEM)/setup.sql
 
 migrate:         ## применить новые миграции seminar02/migrations/V*.sql в схему project
 	bash scripts/migrate.sh seminar02/migrations
