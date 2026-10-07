@@ -1,10 +1,99 @@
 erDiagram
-    %% ER-диаграмма вашего объекта. Синтаксис — в seminar02/example/schema.mmd
-    %% Вставьте этот же блок в README.md внутри ```mermaid — GitHub/GitLab отрисуют.
+    node_group |o--o{ node_group : "родитель / дочерние группы"
+    node_group ||--o{ node : "содержит"
+    node ||--o{ component : "содержит"
+    component ||--o{ metric_source : "каналы"
+    metric_type ||--o{ metric_source : "типизирует"
+    metric_source ||--o{ telemetry : "измерения"
+    node ||--o{ event : "события"
+    node ||--o{ maintenance : "обслуживание"
+    engineer ||--o{ maintenance : "выполняет"
+    maintenance ||--o{ maintenance_resource : "расходует"
+    resource ||--o{ maintenance_resource : "используется"
+    node ||--o{ document : "документация"
 
-    thing ||--o{ other_thing : "связь"
-
-    thing {
-        int  id PK
+    node_group {
+        int id PK
+        int parent_id FK "NULL только для cluster"
         text code UK
+        text name
+        text group_type "cluster | topological"
+        text description "NULL допустим"
+    }
+    node {
+        int id PK
+        int node_group_id FK
+        text hostname UK
+        smallint node_index "1..18"
+        text description "NULL допустим"
+    }
+    component {
+        int id PK
+        int node_id FK,UK "UK: node_id + kind + local_index"
+        text kind UK "cpu | gpu | psu"
+        smallint local_index UK
+        text model "NULL допустим"
+    }
+    metric_type {
+        int id PK
+        text code UK
+        text component_kind "cpu | gpu | psu"
+        text quantity "power | temperature"
+        text unit
+        text description "NULL допустим"
+    }
+    metric_source {
+        int id PK
+        int component_id FK,UK "UK: component_id + metric_type_id"
+        int metric_type_id FK,UK
+        text source_key
+        text description "NULL допустим"
+    }
+    telemetry {
+        bigint id PK
+        int metric_source_id FK,UK "UK: metric_source_id + ts"
+        timestamptz ts UK
+        numeric value
+    }
+    event {
+        int id PK
+        int node_id FK
+        timestamptz occurred_at
+        text severity
+        text event_type
+        text message
+    }
+    engineer {
+        int id PK
+        text tab_no UK
+        text full_name
+        text email "NULL допустим"
+    }
+    maintenance {
+        int id PK
+        int node_id FK
+        int engineer_id FK
+        timestamptz performed_at
+        text maintenance_type
+        text notes "NULL допустим"
+    }
+    resource {
+        int id PK
+        text code UK
+        text name
+        text resource_type
+        text description "NULL допустим"
+    }
+    maintenance_resource {
+        int maintenance_id PK,FK
+        int resource_id PK,FK
+        numeric qty "> 0"
+    }
+    document {
+        int id PK
+        int node_id FK
+        text document_type
+        text title
+        text url UK
+        timestamptz added_at "DEFAULT now()"
     }
