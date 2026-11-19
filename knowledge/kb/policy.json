@@ -1,0 +1,9 @@
+{
+  "demo": {
+    "metric": "GPU_CORE_TEMP",
+    "unit": "degC",
+    "threshold": "80",
+    "operator": ">=",
+    "label": "Учебный предел, не норматив производителя"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "basis": {
+    "topology": ["K02", "K03", "K04"],
+    "components": ["K08"],
+    "telemetry": ["K17", "K18", "K24"]
+  },
+  "topology": ["SUMMIT", "a01", "a01n01"],
+  "components": {"cpu": 2, "gpu": 6, "psu": 2},
+  "missing_gpu5": {"status":"missing_sample", "reason":"D02", "action":"D04"},
+  "diagnoses": {
+    "stock": {"status":"below_threshold", "reason":"D01"},
+    "boundary": {"status":"threshold_reached", "reason":"D01"},
+    "missing": {"status":"missing_sample", "reason":"D02", "action":"D04"}
+  }
+}

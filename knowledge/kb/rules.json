@@ -1,0 +1,16 @@
+[
+  {"id":"R-NODE", "questions":["*"], "priority":100, "when":{"node_found":false}, "status":"unknown_node", "message":"Узел не найден в project.node.", "knowledge":["K06"]},
+  {"id":"R-NO-ROWS", "questions":["Q01","Q02","Q03","Q06","Q07"], "priority":90, "when":{"available":false}, "status":"no_records", "message":"В базе нет записей для ответа.", "knowledge":[]},
+  {"id":"R-NO-SOURCE", "questions":["Q04","Q08","Q09","Q10"], "priority":90, "when":{"source_found":false}, "status":"unknown_source", "message":"Подходящий источник телеметрии не зарегистрирован.", "knowledge":["D02"]},
+  {"id":"R-BAD-VALUE", "questions":["Q04","Q09","Q10"], "priority":90, "when":{"usable":false,"sample_found":true}, "status":"invalid_value", "message":"Измерение непригодно. Проверьте источник телеметрии.", "knowledge":["D02"]},
+  {"id":"R-MISSING", "questions":["Q04","Q09","Q10"], "priority":80, "when":{"source_found":true,"sample_found":false}, "status":"missing_sample", "message":"На заданный момент нет измерения. Проверьте источник телеметрии.", "knowledge":["D02","D04"]},
+  {"id":"R-LIMIT", "questions":["Q08"], "priority":50, "when":{"limit_known":true}, "status":"demo_limit", "message":"Доступен учебный предел в единице метрики.", "knowledge":["D01"]},
+  {"id":"R-NO-LIMIT", "questions":["Q08","Q09","Q10"], "priority":40, "when":{"limit_known":false}, "status":"unknown_limit", "message":"Применимый подтверждённый предел неизвестен. Проверка температуры по пределу невозможна.", "knowledge":["D01"]},
+  {"id":"R-HOT", "questions":["Q09","Q10"], "priority":50, "when":{"usable":true,"limit_known":true,"reached":true}, "status":"threshold_reached", "message":"Достигнут учебный предел. Сверьте показания датчика и проверьте охлаждение.", "knowledge":["D01","D03"]},
+  {"id":"R-BELOW", "questions":["Q09","Q10"], "priority":50, "when":{"usable":true,"limit_known":true,"reached":false}, "status":"below_threshold", "message":"Измерение ниже учебного предела. Оценка относится к одному показанию.", "knowledge":["D01"]},
+  {"id":"R-GAPS", "questions":["Q05"], "priority":60, "when":{"gaps_found":true}, "status":"gaps_found", "message":"В снимке есть пропуски измерений или незарегистрированные источники.", "knowledge":["D02"]},
+  {"id":"R-COVERAGE-UNKNOWN", "questions":["Q05"], "priority":80, "when":{"available":false}, "status":"coverage_unknown", "message":"Нет ожидаемых источников для оценки полноты.", "knowledge":["D02"]},
+  {"id":"R-COVERAGE", "questions":["Q05"], "priority":10, "when":{"gaps_found":false}, "status":"no_gaps", "message":"Для всех ожидаемых источников есть записи в снимке.", "knowledge":[]},
+  {"id":"R-RECORDS", "questions":["Q01","Q02","Q03","Q04","Q06","Q07"], "priority":10, "when":{"available":true}, "status":"found", "message":"Ответ получен из строк схемы project.", "knowledge":[]},
+  {"id":"R-DIAGNOSIS-DEFAULT", "questions":["Q09","Q10"], "priority":0, "when":{"node_found":true}, "status":"undetermined", "message":"Недостаточно оснований для диагноза.", "knowledge":[]}
+]
