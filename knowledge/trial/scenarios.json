@@ -1,0 +1,29 @@
+{
+  "knowledge": {
+    "node_membership": "K02",
+    "root_without_parent": "K03",
+    "topological_parent": "K04",
+    "component_kinds": "K08",
+    "gpu_temperature": "K17",
+    "source_registration": "K18",
+    "sample_uniqueness": "K24",
+    "limit": "D01",
+    "missing": "D02",
+    "check_source": "D04"
+  },
+  "label": "Учебные сценарии на основе синтетического набора миграции",
+  "node": "a01n01",
+  "node_group": "a01",
+  "groups": [
+    {"code":"SUMMIT","kind":"cluster","parent":null},
+    {"code":"a01","kind":"topological","parent":"SUMMIT"}
+  ],
+  "components": ["cpu","cpu","gpu","gpu","gpu","gpu","gpu","gpu","psu","psu"],
+  "metric": {"kind":"gpu","code":"GPU_CORE_TEMP","unit":"degC"},
+  "threshold": 80,
+  "scenarios": [
+    {"id":"stock", "sources":[0,5], "samples":[{"source":0,"value":61}]},
+    {"id":"boundary", "sources":[0,5], "samples":[{"source":0,"value":80}]},
+    {"id":"missing", "sources":[0,5], "samples":[]}
+  ]
+}

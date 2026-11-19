@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: timescale/timescaledb:latest-pg17
+    environment:
+      POSTGRES_USER: kb
+      POSTGRES_DB: cluster_kb_demo
+      POSTGRES_HOST_AUTH_METHOD: trust
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kb", "-d", "cluster_kb_demo"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - demo-data:/var/lib/postgresql/data
+  app:
+    build:
+      context: .
+      dockerfile: kb/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://kb@postgres/cluster_kb_demo
+    volumes:
+      - .:/app:ro
+volumes:
+  demo-data:
